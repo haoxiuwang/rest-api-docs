@@ -178,6 +178,11 @@
     },
     "definitions": {
         "BanRule": {
+            "required": [
+                "sum",
+                "count",
+                "required"
+            ],
             "properties": {
                 "_id": {
                     "type": "string",
@@ -187,19 +192,17 @@
                 "sum": {
                     "type": "integer",
                     "format": "int32",
-                    "required": true,
                     "description": "sum of ChatRule triggered weights that leads to ban"
                 },
                 "count": {
                     "type": "integer",
                     "format": "int32",
-                    "required": true,
                     "description": "number of any ChatRule triggered that leads to ban"
                 },
                 "duration": {
                     "type": "integer",
                     "format": "int32",
-                    "description": "ban duration in seconds."
+                    "description": "ban duration in seconds (0 = permanent ban)."
                 },
                 "created_at": {
                     "type": "string",
@@ -226,6 +229,11 @@
             }
         },
         "BanLog": {
+            "required": [
+                "valid_till",
+                "ban_rule_id",
+                "user_id"
+            ],
             "properties": {
                 "_id": {
                     "type": "string",
@@ -239,8 +247,7 @@
                 "valid_till": {
                     "type": "string",
                     "format": "dateTime",
-                    "description": "ban deadline",
-                    "required": true
+                    "description": "ban deadline"
                 },
                 "created_at": {
                     "type": "string",
