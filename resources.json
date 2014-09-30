@@ -4,6 +4,6 @@
         "description": ""
     }],
     "apiVersion": "4.0",
-    "swaggerVersion": "2.0",
+    "swaggerVersion": "1.2",
     "basePath": "http://quickblox.github.io/rest-api-docs/"
 }
