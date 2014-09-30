@@ -1,9 +1,0 @@
-{
-    "apis": [{
-        "path": "/bans.json",
-        "description": "Ban Rule API"
-    }],
-    "apiVersion": "0.1.0",
-    "swaggerVersion": "2.0",
-    "basePath": "https://api.quickblox.com.com/"
-}
