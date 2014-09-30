@@ -24,6 +24,9 @@
             "get": {
                 "summary": "Get list of bans",
                 "description": "Get list of bans",
+                "tags": [
+                    "BanRule"
+                ],
                 "responses": {
                     "200": {
                         "description": "An array of ban rules",
@@ -46,6 +49,9 @@
                         "description": "Validation errors"
                     }
                 },
+                "tags": [
+                    "BanRule"
+                ],
                 "parameters": [
                     {
                         "name": "QB-Token",
@@ -75,7 +81,7 @@
                 ]
             }
         },
-        "/chat/bans/:id": {
+        "/chat/bans/{ID}": {
             "get": {
                 "summary": "Get ban rule by id",
                 "responses": {
@@ -89,7 +95,10 @@
                     "404": {
                         "description": "Ban rule not found"
                     }
-                }
+                },
+                "tags": [
+                    "BanRule"
+                ]
             },
             "put": {
                 "summary": "Update ban rule by id",
@@ -100,7 +109,10 @@
                     "404": {
                         "description": "Ban rule not found"
                     }
-                }
+                },
+                "tags": [
+                    "BanRule"
+                ]
             },
             "delete": {
                 "summary": "Delete ban rule by id",
@@ -111,10 +123,13 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "tags": [
+                    "BanRule"
+                ]
             }
         },
-        "/chat/bans/:id/log": {
+        "/chat/bans/{ID}/log": {
             "get": {
                 "summary": "Get ban rule log",
                 "responses": {
@@ -125,7 +140,10 @@
                             "$ref": "BanLog"
                         }
                     }
-                }
+                },
+                "tags": [
+                    "BanLog"
+                ]
             },
             "post": {
                 "summary": "Create ban rule trigger (ban user)",
@@ -142,6 +160,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
+                            "type": "object",
                             "$ref": "BanLog"
                         }
                     }
@@ -150,7 +169,10 @@
                     "204": {
                         "description": "Ban log successfuly created"
                     }
-                }
+                },
+                "tags": [
+                    "BanLog"
+                ]
             }
         }
     },
