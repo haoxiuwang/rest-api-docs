@@ -1,9 +1,9 @@
 {
     "apis": [{
-        "path": "/bans.json",
+        "path": "./bans.json",
         "description": ""
     }],
     "apiVersion": "4.0",
     "swaggerVersion": "1.0",
-    "basePath": "/"
+    "basePath": "./"
 }
