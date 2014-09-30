@@ -5,5 +5,5 @@
     }],
     "apiVersion": "4.0",
     "swaggerVersion": "1.0",
-    "basePath": "http://api.wordnik.com/v4"
+    "basePath": "/"
 }
