@@ -10,14 +10,14 @@
         "https",
         "http"
     ],
-    "basePath": "/chat",
+    "basePath": "/",
     "produces": [
         "application/json"
     ],
     "consumes": [
         "application/json",
         "application/xml",
-        "application/x-www-formurlencoded"
+        "application/x-www-form-urlencoded"
     ],
     "paths": {
         "/chat/bans": {
@@ -49,6 +49,9 @@
                         "description": "Validation errors"
                     }
                 },
+                "tags": [
+                    "BanRule"
+                ],
                 "parameters": [
                     {
                         "name": "QB-Token",
@@ -58,12 +61,22 @@
                         "description": "QuickBlox authentication token"
                     },
                     {
-                        "name": "ban",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "BanRule"
-                        }
+                        "name": "ban[sum]",
+                        "in": "query",
+                        "description": "sum of ChatRule triggered weights that leads to ban",
+                        "required": true
+                    },
+                    {
+                        "name": "ban[count]",
+                        "in": "query",
+                        "description": "count of ChatRule triggered weights that leads to ban",
+                        "required": true
+                    },
+                    {
+                        "name": "ban[duration]",
+                        "in": "query",
+                        "description": "ban duration in seconds",
+                        "required": true
                     }
                 ]
             }
@@ -82,7 +95,10 @@
                     "404": {
                         "description": "Ban rule not found"
                     }
-                }
+                },
+                "tags": [
+                    "BanRule"
+                ]
             },
             "put": {
                 "summary": "Update ban rule by id",
@@ -93,7 +109,10 @@
                     "404": {
                         "description": "Ban rule not found"
                     }
-                }
+                },
+                "tags": [
+                    "BanRule"
+                ]
             },
             "delete": {
                 "summary": "Delete ban rule by id",
@@ -104,7 +123,10 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "tags": [
+                    "BanRule"
+                ]
             }
         },
         "/chat/bans/:id/log": {
@@ -118,7 +140,10 @@
                             "$ref": "BanLog"
                         }
                     }
-                }
+                },
+                "tags": [
+                    "BanLog"
+                ]
             },
             "post": {
                 "summary": "Create ban rule trigger (ban user)",
@@ -143,7 +168,10 @@
                     "204": {
                         "description": "Ban log successfuly created"
                     }
-                }
+                },
+                "tags": [
+                    "BanLog"
+                ]
             }
         }
     },
