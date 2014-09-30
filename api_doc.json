@@ -1,0 +1,242 @@
+{
+    "swagger": 2,
+    "info": {
+        "title": "Quickblox TnS API",
+        "description": "chat filter module",
+        "version": "0.1.0"
+    },
+    "host": "api.quickblox.com",
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "basePath": "/chat",
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json",
+        "application/xml",
+        "application/x-www-formurlencoded"
+    ],
+    "paths": {
+        "/chat/bans": {
+            "get": {
+                "summary": "Get list of bans",
+                "description": "Get list of bans",
+                "tags": [
+                    "BanRule"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of ban rules",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "BanRule"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create new ban rule",
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "QB-Token",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "QuickBlox authentication token"
+                    },
+                    {
+                        "name": "ban",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "BanRule"
+                        }
+                    }
+                ]
+            }
+        },
+        "/chat/bans/:id": {
+            "get": {
+                "summary": "Get ban rule by id",
+                "responses": {
+                    "200": {
+                        "description": "Ban rule with specified id",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "BanRule"
+                        }
+                    },
+                    "404": {
+                        "description": "Ban rule not found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update ban rule by id",
+                "responses": {
+                    "204": {
+                        "description": "Successful update"
+                    },
+                    "404": {
+                        "description": "Ban rule not found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete ban rule by id",
+                "responses": {
+                    "204": {
+                        "description": "Successful deletion"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/chat/bans/:id/log": {
+            "get": {
+                "summary": "Get ban rule log",
+                "responses": {
+                    "200": {
+                        "description": "List of created bans",
+                        "schema": {
+                            "type": "array",
+                            "$ref": "BanLog"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create ban rule trigger (ban user)",
+                "parameters": [
+                    {
+                        "name": "QB-Token",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "QuickBlox authentication token"
+                    },
+                    {
+                        "name": "ban",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "BanLog"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Ban log successfuly created"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "BanRule": {
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "readOnly": true,
+                    "description": "unique record identifier"
+                },
+                "sum": {
+                    "type": "integer",
+                    "format": "int32",
+                    "required": true,
+                    "description": "sum of ChatRule triggered weights that leads to ban"
+                },
+                "count": {
+                    "type": "integer",
+                    "format": "int32",
+                    "required": true,
+                    "description": "number of any ChatRule triggered that leads to ban"
+                },
+                "duration": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "ban duration in seconds."
+                },
+                "created_at": {
+                    "type": "string",
+                    "readOnly": true,
+                    "format": "dateTime"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "readOnly": true,
+                    "format": "dateTime"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "format": "int32",
+                    "readOnly": true,
+                    "description": "owner ID"
+                },
+                "application_id": {
+                    "type": "integer",
+                    "readOly": true,
+                    "format": "int32",
+                    "description": "host application ID"
+                }
+            }
+        },
+        "BanLog": {
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "readOnly": true,
+                    "description": "unique record identifier"
+                },
+                "ban_rule_id": {
+                    "type": "string",
+                    "description": "ID of BanRule",
+                    "required": true
+                },
+                "valid_till": {
+                    "type": "string",
+                    "format": "dateTime",
+                    "description": "ban deadline",
+                    "required": true
+                },
+                "created_at": {
+                    "type": "string",
+                    "readOnly": true,
+                    "format": "dateTime"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "readOnly": true,
+                    "format": "dateTime"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "format": "int32",
+                    "readOnly": true,
+                    "description": "banned user ID"
+                },
+                "application_id": {
+                    "type": "integer",
+                    "readOly": true,
+                    "format": "int32",
+                    "description": "host application ID"
+                }
+            }
+        }
+    }
+}
