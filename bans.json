@@ -184,7 +184,6 @@
                 "sum": {
                     "type": "integer",
                     "format": "int32",
-                    "required": true,
                     "description": "sum of ChatRule triggered weights that leads to ban"
                 },
                 "count": {
