@@ -29,7 +29,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "An array of ban rules"
+                        "description": "An array of ban rules",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "BanRule"
+                            }
+                        }
                     }
                 }
             },
@@ -46,34 +52,25 @@
                 "tags": [
                     "BanRule"
                 ],
-                "parameters": [{
-                    "name": "QB-Token",
-                    "in": "header",
-                    "required": true,
-                    "type": "string",
-                    "description": "QuickBlox authentication token"
-                }, {
-                    "name": "ban[sum]",
-                    "in": "query",
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "sum of ChatRule triggered weights that leads to ban",
-                    "required": true
-                }, {
-                    "name": "ban[count]",
-                    "in": "query",
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "count of ChatRule triggered weights that leads to ban",
-                    "required": true
-                }, {
-                    "name": "ban[duration]",
-                    "in": "query",
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "ban duration in seconds",
-                    "required": true
-                }]
+                "parameters": [
+                    {
+                        "name": "QB-Token",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "QuickBlox authentication token"
+                    },
+                    {
+                        "name": "ban",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "BanRule"
+                        },
+                        "description": "sum of ChatRule triggered weights that leads to ban",
+                        "required": true
+                    }
+                ]
             }
         },
         "/chat/bans/{ID}": {
@@ -129,7 +126,11 @@
                 "summary": "Get ban rule log",
                 "responses": {
                     "200": {
-                        "description": "List of created bans"
+                        "description": "List of created bans",
+                        "schema": {
+                            "type": "array",
+                            "$ref": "BanLog"
+                        }
                     }
                 },
                 "tags": [
@@ -138,21 +139,24 @@
             },
             "post": {
                 "summary": "Create ban rule trigger (ban user)",
-                "parameters": [{
-                    "name": "QB-Token",
-                    "in": "header",
-                    "required": true,
-                    "type": "string",
-                    "description": "QuickBlox authentication token"
-                }, {
-                    "name": "ban",
-                    "in": "body",
-                    "required": true,
-                    "schema": {
-                        "type": "object",
-                        "$ref": "BanLog"
+                "parameters": [
+                    {
+                        "name": "QB-Token",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "QuickBlox authentication token"
+                    },
+                    {
+                        "name": "ban",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "BanLog"
+                        }
                     }
-                }],
+                ],
                 "responses": {
                     "204": {
                         "description": "Ban log successfuly created"
