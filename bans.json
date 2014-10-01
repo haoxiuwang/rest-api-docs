@@ -189,7 +189,6 @@
                 "_id": {
                     "type": "string",
                     "readOnly": true,
-                    "required": false,
                     "description": "unique record identifier"
                 },
                 "sum": {
