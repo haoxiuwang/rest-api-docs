@@ -3,7 +3,7 @@
         "path": "/bans.json",
         "description": ""
     }],
-    "apiVersion": "4.0",
-    "swaggerVersion": "1.2",
+    "apiVersion": "1.0",
+    "swaggerVersion": "2.0",
     "basePath": "http://quickblox.github.io/rest-api-docs"
 }
