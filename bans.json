@@ -55,16 +55,22 @@
                 }, {
                     "name": "ban[sum]",
                     "in": "query",
+                    "type": "integer",
+                    "format": "int32",
                     "description": "sum of ChatRule triggered weights that leads to ban",
                     "required": true
                 }, {
                     "name": "ban[count]",
                     "in": "query",
+                    "type": "integer",
+                    "format": "int32",
                     "description": "count of ChatRule triggered weights that leads to ban",
                     "required": true
                 }, {
                     "name": "ban[duration]",
                     "in": "query",
+                    "type": "integer",
+                    "format": "int32",
                     "description": "ban duration in seconds",
                     "required": true
                 }]
