@@ -52,33 +52,28 @@
                 "tags": [
                     "BanRule"
                 ],
-                "parameters": [
-                    {
-                        "name": "QB-Token",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "description": "QuickBlox authentication token"
-                    },
-                    {
-                        "name": "ban[sum]",
-                        "in": "query",
-                        "description": "sum of ChatRule triggered weights that leads to ban",
-                        "required": true
-                    },
-                    {
-                        "name": "ban[count]",
-                        "in": "query",
-                        "description": "count of ChatRule triggered weights that leads to ban",
-                        "required": true
-                    },
-                    {
-                        "name": "ban[duration]",
-                        "in": "query",
-                        "description": "ban duration in seconds",
-                        "required": true
-                    }
-                ]
+                "parameters": [{
+                    "name": "QB-Token",
+                    "in": "header",
+                    "required": true,
+                    "type": "string",
+                    "description": "QuickBlox authentication token"
+                }, {
+                    "name": "ban[sum]",
+                    "in": "query",
+                    "description": "sum of ChatRule triggered weights that leads to ban",
+                    "required": true
+                }, {
+                    "name": "ban[count]",
+                    "in": "query",
+                    "description": "count of ChatRule triggered weights that leads to ban",
+                    "required": true
+                }, {
+                    "name": "ban[duration]",
+                    "in": "query",
+                    "description": "ban duration in seconds",
+                    "required": true
+                }]
             }
         },
         "/chat/bans/{ID}": {
@@ -137,7 +132,9 @@
                         "description": "List of created bans",
                         "schema": {
                             "type": "array",
-                            "$ref": "BanLog"
+                            "items": {
+                                "$ref": "BanLog"
+                            }
                         }
                     }
                 },
@@ -147,24 +144,21 @@
             },
             "post": {
                 "summary": "Create ban rule trigger (ban user)",
-                "parameters": [
-                    {
-                        "name": "QB-Token",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "description": "QuickBlox authentication token"
-                    },
-                    {
-                        "name": "ban",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "$ref": "BanLog"
-                        }
+                "parameters": [{
+                    "name": "QB-Token",
+                    "in": "header",
+                    "required": true,
+                    "type": "string",
+                    "description": "QuickBlox authentication token"
+                }, {
+                    "name": "ban",
+                    "in": "body",
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "$ref": "BanLog"
                     }
-                ],
+                }],
                 "responses": {
                     "204": {
                         "description": "Ban log successfuly created"
