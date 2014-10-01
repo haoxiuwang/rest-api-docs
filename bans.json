@@ -61,14 +61,20 @@
                         "description": "QuickBlox authentication token"
                     },
                     {
-                        "name": "ban",
-                        "in": "body",
-                        "schema": {
-                            "type": "object",
-                            "$ref": "BanRule"
-                        },
-                        "description": "sum of ChatRule triggered weights that leads to ban",
-                        "required": true
+                        "name": "ban[sum]",
+                        "description": "count of ChatRule triggered weights that leads to ban",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "ban[count]",
+                        "description": "count of ChatRule triggered weights that leads to ban",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
                     }
                 ]
             }
@@ -148,13 +154,17 @@
                         "description": "QuickBlox authentication token"
                     },
                     {
-                        "name": "ban",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "$ref": "BanLog"
-                        }
+                        "name": "ban_log[ban_rule_id]",
+                        "type": "string",
+                        "in": "query",
+                        "description": "ID of BanRule"
+                    },
+                    {
+                        "name": "ban_log[valid_till]",
+                        "in": "query",
+                        "type": "string",
+                        "format": "dateTime",
+                        "description": "ban deadline"
                     }
                 ],
                 "responses": {
@@ -179,6 +189,7 @@
                 "_id": {
                     "type": "string",
                     "readOnly": true,
+                    "required": false,
                     "description": "unique record identifier"
                 },
                 "sum": {
