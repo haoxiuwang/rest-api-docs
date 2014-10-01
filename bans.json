@@ -1,5 +1,5 @@
 {
-    "swagger": 2,
+    "swagger": 1.2,
     "info": {
         "title": "Quickblox TnS API",
         "description": "chat filter module",
