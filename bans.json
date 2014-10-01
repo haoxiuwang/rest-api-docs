@@ -29,12 +29,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "An array of ban rules",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "BanRule"
-                            }
+                        "description": "An array of ban rules"
                         }
                     }
                 }
@@ -129,13 +124,7 @@
                 "summary": "Get ban rule log",
                 "responses": {
                     "200": {
-                        "description": "List of created bans"//,
-                        // "schema": {
-                        //     "type": "array",
-                        //     "items": {
-                        //         "$ref": "BanLog"
-                        //     }
-                        // }
+                        "description": "List of created bans"
                     }
                 },
                 "tags": [
