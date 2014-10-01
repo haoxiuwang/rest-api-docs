@@ -31,10 +31,7 @@
                     "200": {
                         "description": "An array of ban rules",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "BanRule"
-                            }
+                            "type": "array"
                         }
                     }
                 }
