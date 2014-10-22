@@ -92,7 +92,7 @@
                 ]
             }
         },
-        "/chat/bans/{ID}": {
+        "/chat/message_rules/{ID}": {
             "get": {
                 "summary": "Get message rule by id",
                 "responses": {
@@ -126,7 +126,7 @@
                 ]
             },
             "delete": {
-                "summary": "Delete ban rule by id",
+                "summary": "Delete message rule by id",
                 "responses": {
                     "204": {
                         "description": "Successful deletion"
@@ -140,71 +140,27 @@
                 ]
             }
         },
-        "/chat/bans/{ID}/log": {
-            "get": {
-                "summary": "Get ban rule log",
-                "responses": {
-                    "200": {
-                        "description": "List of created bans",
-                        "schema": {
-                            "type": "array",
-                            "$ref": "BanLog"
-                        }
-                    }
-                },
-                "tags": [
-                    "BanLog"
-                ]
-            },
-            "post": {
-                "summary": "Create ban rule trigger (ban user)",
-                "parameters": [
-                    {
-                        "name": "QB-Token",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "description": "QuickBlox authentication token"
-                    },
-                    {
-                        "name": "ban_log[user_id]",
-                        "type": "integer",
-                        "format": "int32",
-                        "in": "query",
-                        "description": "ID of User"
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Ban log successfuly created"
-                    }
-                },
-                "tags": [
-                    "BanLog"
-                ]
-            }
-        },
-        "/chat/rules": {
+        "/chat/bans": {
             "get": {
                 "summary": "Get list of bans",
                 "description": "Get list of bans",
                 "tags": [
-                    "ChatRule"
+                    "Ban"
                 ],
                 "responses": {
                     "200": {
-                        "description": "An array of chat rules",
+                        "description": "An array of ban records",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "ChatRule"
+                                "$ref": "Ban"
                             }
                         }
                     }
                 }
             },
             "post": {
-                "summary": "Create new chat rule",
+                "summary": "Create new ban",
                 "responses": {
                     "204": {
                         "description": "No content"
@@ -214,7 +170,7 @@
                     }
                 },
                 "tags": [
-                    "ChatRule"
+                    "Ban"
                 ],
                 "parameters": [
                     {
@@ -225,51 +181,43 @@
                         "description": "QuickBlox authentication token"
                     },
                     {
-                        "name": "rule[mask]",
-                        "description": "mask value",
+                        "name": "ban[user_qb_id]",
                         "in": "query",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "rule[title]",
-                        "description": "title",
-                        "in": "query",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "rule[weight]",
-                        "description": "weight",
-                        "in": "query",
-                        "required": true,
                         "type": "integer",
-                        "format": "int32"
+                        "format": "int32",
+                        "description": "Rule title"
+                    },
+                    {
+                        "name": "ban[expires]",
+                        "in": "query",
+                        "type": "string",
+                        "format": "dateTime",
+                        "description": "cutoff date of ban"
                     }
                 ]
             }
         },
-        "/chat/rules/{ID}": {
+        "/chat/bans/{ID}": {
             "get": {
-                "summary": "Get chat rule by id",
+                "summary": "Get ban by id",
                 "responses": {
                     "200": {
-                        "description": "Chat rule with specified id",
+                        "description": "Ban with specified id",
                         "schema": {
                             "type": "object",
-                            "$ref": "ChatRule"
+                            "$ref": "Ban"
                         }
                     },
                     "404": {
-                        "description": "Ban rule not found"
+                        "description": "Ban not found"
                     }
                 },
                 "tags": [
-                    "ChatRule"
+                    "Ban"
                 ]
             },
             "put": {
-                "summary": "Update chat rule by id",
+                "summary": "Update ban by id",
                 "responses": {
                     "204": {
                         "description": "Successful update"
@@ -279,7 +227,7 @@
                     }
                 },
                 "tags": [
-                    "ChatRule"
+                    "Ban"
                 ]
             },
             "delete": {
@@ -293,54 +241,13 @@
                     }
                 },
                 "tags": [
-                    "BanRule"
-                ]
-            }
-        },
-        "/chat/rules/{ID}/log": {
-            "get": {
-                "summary": "Get chat rule log",
-                "responses": {
-                    "200": {
-                        "description": "List of chat rule triggers",
-                        "schema": {
-                            "type": "array",
-                            "$ref": "BanLog"
-                        }
-                    }
-                },
-                "tags": [
-                    "RuleLog"
-                ]
-            },
-            "post": {
-                "summary": "Create rule trigger",
-                "parameters": [
-                    {
-                        "name": "QB-Token",
-                        "in": "header",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Ban log successfuly created"
-                    }
-                },
-                "tags": [
-                    "RuleLog"
+                    "Ban"
                 ]
             }
         }
     },
     "definitions": {
         "MessageRule": {
-            "required": [
-                "sum",
-                "count",
-                "required"
-            ],
             "properties": {
                 "_id": {
                     "type": "string",
@@ -392,117 +299,21 @@
                 }
             }
         },
-        "BanLog": {
-            "required": [
-                "user_id"
-            ],
+        "Ban": {
             "properties": {
                 "_id": {
                     "type": "string",
                     "readOnly": true,
                     "description": "unique record identifier"
                 },
-                "ban_rule_id": {
-                    "type": "string",
-                    "description": "ID of BanRule"
-                },
-                "valid_till": {
-                    "type": "string",
-                    "format": "dateTime",
-                    "description": "ban deadline"
-                },
-                "created_at": {
-                    "type": "string",
-                    "readOnly": true,
-                    "format": "dateTime"
-                },
-                "updated_at": {
-                    "type": "string",
-                    "readOnly": true,
-                    "format": "dateTime"
-                },
-                "user_id": {
+                "user_qb_id": {
                     "type": "integer",
                     "format": "int32",
-                    "readOnly": true,
-                    "description": "banned user ID"
-                },
-                "application_id": {
-                    "type": "integer",
-                    "readOly": true,
-                    "format": "int32",
-                    "description": "host application ID"
-                }
-            }
-        },
-        "RuleLog": {
-            "required": [
-                "user_id"
-            ],
-            "properties": {
-                "_id": {
-                    "type": "string",
-                    "readOnly": true,
-                    "description": "unique record identifier"
-                },
-                "chat_rule_id": {
-                    "type": "string",
-                    "description": "ID of ChatRule"
-                },
-                "weight": {
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "triggered score"
-                },
-                "chat_message_id": {
-                    "type": "string",
-                    "description": "original chat message id"
-                },
-                "created_at": {
-                    "type": "string",
-                    "readOnly": true,
-                    "format": "dateTime"
-                },
-                "updated_at": {
-                    "type": "string",
-                    "readOnly": true,
-                    "format": "dateTime"
-                },
-                "user_id": {
-                    "type": "integer",
-                    "format": "int32",
-                    "readOnly": true,
-                    "description": "user ID"
-                },
-                "application_id": {
-                    "type": "integer",
-                    "readOly": true,
-                    "format": "int32",
-                    "description": "host application ID"
-                }
-            }
-        },
-        "ChatRule": {
-            "required": [
-                "value"
-            ],
-            "properties": {
-                "_id": {
-                    "type": "string",
-                    "readOnly": true,
-                    "description": "unique record identifier"
-                },
-                "title": {
-                    "type": "string",
                     "description": "Rule title"
                 },
-                "mask": {
+                "expires": {
                     "type": "string",
-                    "description": "mask value"
-                },
-                "value": {
-                    "type": "string",
-                    "description": "rule value"
+                    "format": "dateTime"
                 },
                 "created_at": {
                     "type": "string",
