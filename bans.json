@@ -20,20 +20,20 @@
         "application/x-www-form-urlencoded"
     ],
     "paths": {
-        "/chat/bans": {
+        "/chat/message_rules": {
             "get": {
-                "summary": "Get list of bans",
-                "description": "Get list of bans",
+                "summary": "Get list of message rules",
+                "description": "Get list of message rules",
                 "tags": [
-                    "BanRule"
+                    "MessageRule"
                 ],
                 "responses": {
                     "200": {
-                        "description": "An array of ban rules",
+                        "description": "An array of message rules",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "BanRule"
+                                "$ref": "MessageRule"
                             }
                         }
                     }
@@ -50,7 +50,7 @@
                     }
                 },
                 "tags": [
-                    "BanRule"
+                    "MessageRule"
                 ],
                 "parameters": [
                     {
@@ -61,45 +61,58 @@
                         "description": "QuickBlox authentication token"
                     },
                     {
-                        "name": "ban[sum]",
-                        "description": "count of ChatRule triggered weights that leads to ban",
+                        "name": "message_rule[find_regexp]",
+                        "description": "regular expression (rule for identifying the potentially violating text)",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message_rule[find_string]",
+                        "description": "dictionary of string values (rule for identifying the potentially violating text)",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message_rule[score]",
+                        "description": "number incrementing the total ‘offensive score’ of current message",
                         "in": "query",
                         "required": true,
                         "type": "integer",
                         "format": "int32"
                     },
                     {
-                        "name": "ban[count]",
-                        "description": "count of ChatRule triggered weights that leads to ban",
+                        "name": "message_rule[mask]",
+                        "description": "masking value - empty (no value) - no masking, message goes through as usual",
                         "in": "query",
                         "required": true,
-                        "type": "integer",
-                        "format": "int32"
+                        "type": "string"
                     }
                 ]
             }
         },
         "/chat/bans/{ID}": {
             "get": {
-                "summary": "Get ban rule by id",
+                "summary": "Get message rule by id",
                 "responses": {
                     "200": {
-                        "description": "Ban rule with specified id",
+                        "description": "Message rule with specified id",
                         "schema": {
                             "type": "object",
-                            "$ref": "BanRule"
+                            "$ref": "MessageRule"
                         }
                     },
                     "404": {
-                        "description": "Ban rule not found"
+                        "description": "Message rule not found"
                     }
                 },
                 "tags": [
-                    "BanRule"
+                    "MessageRule"
                 ]
             },
             "put": {
-                "summary": "Update ban rule by id",
+                "summary": "Update message rule by id",
                 "responses": {
                     "204": {
                         "description": "Successful update"
@@ -109,7 +122,7 @@
                     }
                 },
                 "tags": [
-                    "BanRule"
+                    "MessageRule"
                 ]
             },
             "delete": {
@@ -123,7 +136,7 @@
                     }
                 },
                 "tags": [
-                    "BanRule"
+                    "MessageRule"
                 ]
             }
         },
@@ -307,8 +320,7 @@
                         "name": "QB-Token",
                         "in": "header",
                         "required": true,
-                        "type": "string",
-                        "description": "QuickBlox authentication token"
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -323,7 +335,7 @@
         }
     },
     "definitions": {
-        "BanRule": {
+        "MessageRule": {
             "required": [
                 "sum",
                 "count",
@@ -335,20 +347,26 @@
                     "readOnly": true,
                     "description": "unique record identifier"
                 },
-                "sum": {
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "sum of ChatRule triggered weights that leads to ban"
+                "find_regexp": {
+                    "type": "string",
+                    "description": "contains a regular expression (rule for identifying the potentially violating text)"
                 },
-                "count": {
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "number of any ChatRule triggered that leads to ban"
+                "find_string": {
+                    "type": "string",
+                    "description": "contains a dictionary of string values (rule for identifying the potentially violating text)"
                 },
-                "duration": {
+                "score": {
                     "type": "integer",
                     "format": "int32",
-                    "description": "ban duration in seconds (0 = permanent ban)."
+                    "description": "number incrementing the total ‘offensive score’ of current message"
+                },
+                "mask": {
+                    "type": "string",
+                    "description": "masking value - 1. empty (no value), no masking, message goes through as usual; 2. any other value (example - '<censored>') the suspicious part of message is replaced with the mask value"
+                },
+                "external_id": {
+                    "type": "string",
+                    "description": "link to external (client’s own) TnS system rules identification"
                 },
                 "created_at": {
                     "type": "string",
