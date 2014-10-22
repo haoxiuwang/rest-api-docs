@@ -223,7 +223,7 @@
                         "description": "Successful update"
                     },
                     "404": {
-                        "description": "Ban rule not found"
+                        "description": "Ban not found"
                     }
                 },
                 "tags": [
@@ -231,7 +231,7 @@
                 ]
             },
             "delete": {
-                "summary": "Delete chat rule by id",
+                "summary": "Delete ban by id",
                 "responses": {
                     "204": {
                         "description": "Successful deletion"
@@ -242,6 +242,116 @@
                 },
                 "tags": [
                     "Ban"
+                ]
+            }
+        },
+        "/chat/message_score_groups": {
+            "get": {
+                "summary": "Get list of message score groups",
+                "description": "Get list of message score groups",
+                "tags": [
+                    "MessageScoreGroup"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of message score groups",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "MessageScoreGroup"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create new message score group",
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    }
+                },
+                "tags": [
+                    "MessageScoreGroup"
+                ],
+                "parameters": [
+                    {
+                        "name": "QB-Token",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "QuickBlox authentication token"
+                    },
+                    {
+                        "name": "message_score_group[score]",
+                        "in": "query",
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "qualifying score for the message to fall into this group"
+                    },
+                    {
+                        "name": "message_score_group[block]",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "whether to block the message, in case if blocked chat won’t get it delivered and other users won’t see it"
+                    },
+                    {
+                        "name": "message_score_group[notify]",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "whether to send to TnS admins DL an e-mail with notification"
+                    }
+                ]
+            }
+        },
+        "/chat/message_score_groups/{ID}": {
+            "get": {
+                "summary": "Get message score group by id",
+                "responses": {
+                    "200": {
+                        "description": "message score group with specified id",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "MessageScoreGroup"
+                        }
+                    },
+                    "404": {
+                        "description": "MessageScoreGroup not found"
+                    }
+                },
+                "tags": [
+                    "MessageScoreGroup"
+                ]
+            },
+            "put": {
+                "summary": "Update MessageScoreGroup by id",
+                "responses": {
+                    "204": {
+                        "description": "Successful update"
+                    },
+                    "404": {
+                        "description": "MessageScoreGroup rule not found"
+                    }
+                },
+                "tags": [
+                    "MessageScoreGroup"
+                ]
+            },
+            "delete": {
+                "summary": "Delete MessageScoreGroup by id",
+                "responses": {
+                    "204": {
+                        "description": "Successful deletion"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "tags": [
+                    "MessageScoreGroup"
                 ]
             }
         }
@@ -309,7 +419,7 @@
                 "user_qb_id": {
                     "type": "integer",
                     "format": "int32",
-                    "description": "Rule title"
+                    "description": "banned user ID"
                 },
                 "expires": {
                     "type": "string",
@@ -329,7 +439,51 @@
                     "type": "integer",
                     "format": "int32",
                     "readOnly": true,
-                    "description": "banned user ID"
+                    "description": "resource owner"
+                },
+                "application_id": {
+                    "type": "integer",
+                    "readOly": true,
+                    "format": "int32",
+                    "description": "host application ID+"
+                }
+            }
+        },
+        "MessageScoreGroup": {
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "readOnly": true,
+                    "description": "unique record identifier"
+                },
+                "score": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "qualifying score for the message to fall into this group"
+                },
+                "block": {
+                    "type": "boolean",
+                    "description": "whether to block the message, in case if blocked chat won’t get it delivered and other users won’t see it"
+                },
+                "notify": {
+                    "type": "boolean",
+                    "description": "whether to send to TnS admins DL an e-mail with notification"
+                },
+                "created_at": {
+                    "type": "string",
+                    "readOnly": true,
+                    "format": "dateTime"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "readOnly": true,
+                    "format": "dateTime"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "format": "int32",
+                    "readOnly": true,
+                    "description": "resource owner"
                 },
                 "application_id": {
                     "type": "integer",
