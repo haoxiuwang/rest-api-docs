@@ -88,6 +88,27 @@
                         "in": "query",
                         "required": true,
                         "type": "string"
+                    },
+                    {
+                        "name": "message_rule[name]",
+                        "description": "name",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message_rule[external_id]",
+                        "description": "link to external TnS system rules identification, unique in scope of application_id",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message_rule[locale]",
+                        "description": "locale identificator used for processing messages according to specified value",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
                     }
                 ]
             }
@@ -123,6 +144,65 @@
                 },
                 "tags": [
                     "MessageRule"
+                ],
+                "parameters": [
+                    {
+                        "name": "QB-Token",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "QuickBlox authentication token"
+                    },
+                    {
+                        "name": "message_rule[find_regexp]",
+                        "description": "regular expression (rule for identifying the potentially violating text)",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message_rule[find_string]",
+                        "description": "dictionary of string values (rule for identifying the potentially violating text)",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message_rule[score]",
+                        "description": "number incrementing the total ‘offensive score’ of current message",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "message_rule[mask]",
+                        "description": "masking value - empty (no value) - no masking, message goes through as usual",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message_rule[name]",
+                        "description": "name",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message_rule[external_id]",
+                        "description": "link to external TnS system rules identification, unique in scope of application_id",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message_rule[locale]",
+                        "description": "locale identificator used for processing messages according to specified value",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
                 ]
             },
             "delete": {
@@ -303,6 +383,27 @@
                         "in": "query",
                         "type": "boolean",
                         "description": "whether to send to TnS admins DL an e-mail with notification"
+                    },
+                    {
+                        "name": "message_score_group[name]",
+                        "description": "name",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message_score_group[external_id]",
+                        "description": "link to external TnS system rules identification, unique in scope of application_id",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message_score_group[locale]",
+                        "description": "locale identificator used for processing messages according to specified value",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
                     }
                 ]
             }
@@ -338,6 +439,55 @@
                 },
                 "tags": [
                     "MessageScoreGroup"
+                ],
+                "parameters": [
+                    {
+                        "name": "QB-Token",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "description": "QuickBlox authentication token"
+                    },
+                    {
+                        "name": "message_score_group[score]",
+                        "in": "query",
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "qualifying score for the message to fall into this group"
+                    },
+                    {
+                        "name": "message_score_group[block]",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "whether to block the message, in case if blocked chat won’t get it delivered and other users won’t see it"
+                    },
+                    {
+                        "name": "message_score_group[notify]",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "whether to send to TnS admins DL an e-mail with notification"
+                    },
+                    {
+                        "name": "message_score_group[name]",
+                        "description": "name",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message_score_group[external_id]",
+                        "description": "link to external TnS system rules identification, unique in scope of application_id",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message_score_group[locale]",
+                        "description": "locale identificator used for processing messages according to specified value",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
                 ]
             },
             "delete": {
@@ -384,6 +534,14 @@
                 "external_id": {
                     "type": "string",
                     "description": "link to external (client’s own) TnS system rules identification"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "name"
+                },
+                "locale": {
+                    "type": "string",
+                    "description": "locale identificator used for processing messages according to specified value"
                 },
                 "created_at": {
                     "type": "string",
@@ -468,6 +626,18 @@
                 "notify": {
                     "type": "boolean",
                     "description": "whether to send to TnS admins DL an e-mail with notification"
+                },
+                "external_id": {
+                    "type": "string",
+                    "description": "link to external (client’s own) TnS system rules identification"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "name"
+                },
+                "locale": {
+                    "type": "string",
+                    "description": "locale identificator used for processing messages according to specified value"
                 },
                 "created_at": {
                     "type": "string",
